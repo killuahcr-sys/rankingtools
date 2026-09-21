@@ -1,6 +1,6 @@
 {
   "name": "battery-flow-ranker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "离线截图识别、上船扣除与真实流水排名工具",
   "main": "src/main.js",
