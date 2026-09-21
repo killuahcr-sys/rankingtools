@@ -1,7 +1,11 @@
 node_modules/
 dist/
+dist-light/
 outputs/
 work/
+bin/
+light/resources/
+light/neutralinojs.log
 
 # Generated OCR browser bundle
 src/renderer/vendor/paddleocr.bundle.js

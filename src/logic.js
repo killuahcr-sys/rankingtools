@@ -1,7 +1,7 @@
 'use strict';
 
 const ORIGINAL_FLOW_MIN = 10000;
-const COPY_FLOW_MIN = 1000;
+const COPY_FLOW_MIN = 10000;
 
 const SHIP_PRICES = Object.freeze({
   '舰长': Object.freeze([138, 168, 198]),

@@ -11,7 +11,7 @@ const {
   protocol
 } = require('electron');
 const ExcelJS = require('exceljs');
-const { shipDetailText } = require('./logic');
+const { COPY_FLOW_MIN, shipDetailText } = require('./logic');
 
 let mainWindow;
 
@@ -152,7 +152,7 @@ ipcMain.handle('excel:export', async (_event, rows) => {
       shipDetails: shipDetailText(row.ships),
       deduction: row.deduction,
       finalFlow: row.finalFlow,
-      copyable: row.finalFlow >= 1000 ? '是' : '否'
+      copyable: row.finalFlow >= COPY_FLOW_MIN ? '是' : '否'
     });
   }
 

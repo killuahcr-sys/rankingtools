@@ -1,6 +1,6 @@
 {
   "name": "battery-flow-ranker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "离线截图识别、上船扣除与真实流水排名工具",
   "main": "src/main.js",
@@ -9,7 +9,9 @@
     "postinstall": "npm run build:ocr",
     "start": "electron .",
     "test": "node --test tests/*.test.js",
-    "package:win": "npm run build:ocr && electron-packager . \"真实流水排名助手\" --platform=win32 --arch=x64 --out=dist --overwrite --ignore=\"^/(dist|work|outputs|tests|assets/tessdata)(/|$)|^/(chi_sim|eng)\\.traineddata$\""
+    "package:win": "npm run build:ocr && electron-packager . \"真实流水排名助手\" --platform=win32 --arch=x64 --out=dist --overwrite --ignore=\"^/(dist|work|outputs|tests|assets/tessdata)(/|$)|^/(chi_sim|eng)\\.traineddata$\"",
+    "build:light:assets": "npm run build:ocr && node scripts/build-light-assets.js",
+    "build:light": "neu update && npm run build:light:assets && neu build --embed-resources --release"
   },
   "build": {
     "appId": "cn.local.batteryflowranker",
@@ -20,6 +22,8 @@
   },
   "devDependencies": {
     "@electron/packager": "^20.3.0",
+    "@neutralinojs/lib": "^6.9.0",
+    "@neutralinojs/neu": "^11.7.2",
     "@paddleocr/paddleocr-js": "^0.4.2",
     "electron": "^44.4.3",
     "esbuild": "^0.28.2"

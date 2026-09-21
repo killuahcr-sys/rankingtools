@@ -40,13 +40,14 @@ test('重复用户名保留最高原始流水且忽略低于 10000 的新记录'
   assert.equal(merged[0].ships.length, 1);
 });
 
-test('批量复制只包含最终流水至少 1000 的用户名并按排名换行', () => {
+test('批量复制只包含最终流水至少 10000 的用户名并按排名换行', () => {
   const text = copyableNames([
-    { name: '用户甲', originalFlow: 1200, ships: [] },
-    { name: '用户乙', originalFlow: 999, ships: [] },
-    { name: '用户丙', originalFlow: 2000, ships: [{ price: 100, quantity: 1 }] }
+    { name: '用户甲', originalFlow: 12000, ships: [] },
+    { name: '用户乙', originalFlow: 9999, ships: [] },
+    { name: '用户丙', originalFlow: 20000, ships: [{ price: 100, quantity: 11 }] },
+    { name: '用户丁', originalFlow: 15000, ships: [{ price: 500, quantity: 1 }] }
   ]);
-  assert.equal(text, '用户甲\n用户丙');
+  assert.equal(text, '用户甲\n用户丁');
 });
 
 test('最终流水允许为负数', () => {

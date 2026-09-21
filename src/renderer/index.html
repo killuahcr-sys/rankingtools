@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' app: blob:; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' app: blob:; style-src 'self' 'unsafe-inline' app:; img-src 'self' app: blob: data:; connect-src 'self' app: blob: data:; worker-src 'self' app: blob:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' app: blob:; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' app: blob:; style-src 'self' 'unsafe-inline' app:; img-src 'self' app: blob: data:; connect-src 'self' app: blob: data: ws: wss:; worker-src 'self' app: blob:;" />
     <title>真实流水排名助手</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="app-header">
       <div>
-        <div class="eyebrow">完全离线 · 数据只在本机处理</div>
         <h1>真实流水排名助手</h1>
         <p>识别截图流水，扣除上船流水，自动生成最终排名。</p>
       </div>
@@ -40,7 +39,7 @@
         <article class="summary-card accent">
           <span>可复制用户名</span>
           <strong id="copyCount">0</strong>
-          <small>最终流水 ≥ 1,000</small>
+          <small>最终流水 ≥ 10,000</small>
         </article>
       </section>
 

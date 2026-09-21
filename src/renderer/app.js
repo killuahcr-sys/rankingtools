@@ -6,7 +6,9 @@ const SHIP_PRICES = {
   '总督': [15558, 19998]
 };
 const ORIGINAL_FLOW_MIN = 10000;
-const COPY_FLOW_MIN = 1000;
+const COPY_FLOW_MIN = 10000;
+
+const ASSET_ROOT = typeof window.NL_OS === 'string' ? '/assets' : 'app://local/assets';
 
 let users = [];
 let editingUserId = null;
@@ -205,17 +207,17 @@ async function getOcrInstance() {
     ocrInstancePromise = window.PaddleOCRSdk.create({
       textDetectionModelName: 'PP-OCRv5_mobile_det',
       textDetectionModelAsset: {
-        url: 'app://local/assets/models/PP-OCRv5_mobile_det_onnx_infer.tar'
+        url: `${ASSET_ROOT}/models/PP-OCRv5_mobile_det_onnx_infer.tar`
       },
       textRecognitionModelName: 'PP-OCRv5_mobile_rec',
       textRecognitionModelAsset: {
-        url: 'app://local/assets/models/PP-OCRv5_mobile_rec_onnx_infer.tar'
+        url: `${ASSET_ROOT}/models/PP-OCRv5_mobile_rec_onnx_infer.tar`
       },
       textDetectionBatchSize: 1,
       textRecognitionBatchSize: 8,
       ortOptions: {
         backend: 'wasm',
-        wasmPaths: 'app://local/assets/ort/',
+        wasmPaths: `${ASSET_ROOT}/ort/`,
         numThreads: 1,
         simd: true
       }
