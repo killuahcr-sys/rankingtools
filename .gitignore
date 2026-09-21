@@ -1,0 +1,16 @@
+node_modules/
+dist/
+outputs/
+work/
+
+# Generated OCR browser bundle
+src/renderer/vendor/paddleocr.bundle.js
+
+# Retired Tesseract assets
+assets/tessdata/
+chi_sim.traineddata
+eng.traineddata
+
+# System files
+.DS_Store
+Thumbs.db

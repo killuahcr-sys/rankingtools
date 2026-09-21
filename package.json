@@ -1,0 +1,30 @@
+{
+  "name": "battery-flow-ranker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "离线截图识别、上船扣除与真实流水排名工具",
+  "main": "src/main.js",
+  "scripts": {
+    "build:ocr": "esbuild src/renderer/ocr-entry.js --bundle --format=iife --platform=browser --target=chrome120 --external:fs --external:path --outfile=src/renderer/vendor/paddleocr.bundle.js",
+    "postinstall": "npm run build:ocr",
+    "start": "electron .",
+    "test": "node --test tests/*.test.js",
+    "package:win": "npm run build:ocr && electron-packager . \"真实流水排名助手\" --platform=win32 --arch=x64 --out=dist --overwrite --ignore=\"^/(dist|work|outputs|tests|assets/tessdata)(/|$)|^/(chi_sim|eng)\\.traineddata$\""
+  },
+  "build": {
+    "appId": "cn.local.batteryflowranker",
+    "productName": "真实流水排名助手"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "@paddleocr/paddleocr-js": "^0.4.2",
+    "electron": "^44.4.3",
+    "esbuild": "^0.28.2"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
+  }
+}

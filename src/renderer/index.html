@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' app: blob:; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' app: blob:; style-src 'self' 'unsafe-inline' app:; img-src 'self' app: blob: data:; connect-src 'self' app: blob: data:; worker-src 'self' app: blob:;" />
+    <title>真实流水排名助手</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <div class="eyebrow">完全离线 · 数据只在本机处理</div>
+        <h1>真实流水排名助手</h1>
+        <p>识别截图流水，扣除上船流水，自动生成最终排名。</p>
+      </div>
+      <div class="header-actions">
+        <button id="copyButton" class="button button-secondary">批量复制名单</button>
+        <button id="exportButton" class="button button-primary">导出 Excel</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="summary-grid" aria-label="统计摘要">
+        <article class="summary-card">
+          <span>已录入用户</span>
+          <strong id="userCount">0</strong>
+          <small>原始流水 ≥ 10,000</small>
+        </article>
+        <article class="summary-card">
+          <span>原始流水合计</span>
+          <strong id="originalTotal">0</strong>
+          <small>电池</small>
+        </article>
+        <article class="summary-card">
+          <span>上船扣除合计</span>
+          <strong id="deductionTotal">0</strong>
+          <small>电池</small>
+        </article>
+        <article class="summary-card accent">
+          <span>可复制用户名</span>
+          <strong id="copyCount">0</strong>
+          <small>最终流水 ≥ 1,000</small>
+        </article>
+      </section>
+
+      <section class="workspace-card">
+        <div class="toolbar">
+          <div class="toolbar-main">
+            <button id="recognizeButton" class="button button-primary button-large">
+              <span>＋</span> 选择流水截图
+            </button>
+            <button id="manualAddButton" class="button button-ghost">手动添加用户</button>
+            <p>支持长图和多张图片；重复用户名保留最高流水。</p>
+          </div>
+          <button id="clearButton" class="button button-danger-ghost">清空全部</button>
+        </div>
+
+        <div id="progressPanel" class="progress-panel hidden">
+          <div class="progress-copy">
+            <strong id="progressTitle">正在识别截图…</strong>
+            <span id="progressDetail">首次识别需要加载本地中文识别组件。</span>
+          </div>
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          <div class="empty-illustration">榜</div>
+          <h2>先导入一张流水截图</h2>
+          <p>系统只保留原始流水达到 10,000 的用户。识别完成后请核对用户名与数字。</p>
+          <button id="emptyRecognizeButton" class="button button-primary">选择截图并识别</button>
+        </div>
+
+        <div id="tableArea" class="table-area hidden">
+          <div class="table-note">
+            <span>点击用户名或原始流水即可直接修改。</span>
+            <span>修改与上船记录会立即重新排名。</span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th class="rank-column">排名</th>
+                  <th>用户名</th>
+                  <th class="number-column">原始流水</th>
+                  <th class="number-column">上船扣除</th>
+                  <th class="number-column">最终流水</th>
+                  <th class="actions-column">操作</th>
+                </tr>
+              </thead>
+              <tbody id="userTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="shipModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="shipModalTitle">
+      <section class="modal-card">
+        <div class="modal-header">
+          <div>
+            <div class="eyebrow">上船流水明细</div>
+            <h2 id="shipModalTitle">记录上船情况</h2>
+          </div>
+          <button id="closeShipModal" class="icon-button" aria-label="关闭">×</button>
+        </div>
+        <div class="modal-summary">
+          <div><span>原始流水</span><strong id="modalOriginalFlow">0</strong></div>
+          <div><span>本次扣除</span><strong id="modalDeduction">0</strong></div>
+          <div><span>最终流水</span><strong id="modalFinalFlow">0</strong></div>
+        </div>
+        <div id="shipRows" class="ship-rows"></div>
+        <button id="addShipRow" class="button button-ghost full-width">＋ 添加一条上船记录</button>
+        <div class="modal-footer">
+          <button id="cancelShipModal" class="button button-ghost">取消</button>
+          <button id="saveShipsButton" class="button button-primary">保存并重新排名</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="confirmModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <section class="confirm-card">
+        <h2>清空全部数据？</h2>
+        <p>当前录入的用户和上船记录都会清除。此操作无法撤销。</p>
+        <div class="modal-footer">
+          <button id="cancelClearButton" class="button button-ghost">取消</button>
+          <button id="confirmClearButton" class="button button-danger">确认清空</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="toast" class="toast hidden" role="status"></div>
+    <script src="vendor/paddleocr.bundle.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
